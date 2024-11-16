@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:oracle:thin:@100.81.4.168:1521:Movie</property>
+        <property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+        <property name="connection.username">system</property>
+        <property name="connection.password">Tongjidb2024</property>
+
+        <mapping class="org.example.etl.Entity.AmazonTime"/>
+        <mapping class="org.example.etl.Entity.ImdbTime"/>
+        <mapping class="org.example.etl.Entity.MergeAct"/>
+        <mapping class="org.example.etl.Entity.MergeActId"/>
+        <mapping class="org.example.etl.Entity.MergeActor"/>
+        <mapping class="org.example.etl.Entity.MergeDirect"/>
+        <mapping class="org.example.etl.Entity.MergeDirectId"/>
+        <mapping class="org.example.etl.Entity.MergeDirector"/>
+        <mapping class="org.example.etl.Entity.MergeMovie"/>
+        <mapping class="org.example.etl.Entity.MovieDatasource"/>
+        <mapping class="org.example.etl.Entity.MovieDatasourceId"/>
+        <mapping class="org.example.etl.Entity.OriginalAct"/>
+        <mapping class="org.example.etl.Entity.OriginalActId"/>
+        <mapping class="org.example.etl.Entity.OriginalActor"/>
+        <mapping class="org.example.etl.Entity.OriginalDirect"/>
+        <mapping class="org.example.etl.Entity.OriginalDirectId"/>
+        <mapping class="org.example.etl.Entity.OriginalDirector"/>
+        <mapping class="org.example.etl.Entity.OriginalMovie"/>
+        <mapping class="org.example.etl.Entity.OriginalReviewDatum"/>
+        <mapping class="org.example.etl.Entity.EarliestReviewTime"/>
+
+        <!-- DB schema will be updated if needed -->
+        <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
+    </session-factory>
+</hibernate-configuration>
