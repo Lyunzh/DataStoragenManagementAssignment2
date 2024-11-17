@@ -29,6 +29,7 @@
         <mapping class="org.example.etl.Entity.OriginalMovie"/>
         <mapping class="org.example.etl.Entity.OriginalReviewDatum"/>
         <mapping class="org.example.etl.Entity.EarliestReviewTime"/>
+        <mapping class="org.example.etl.Entity.MovieAvgScore"/>
 
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
