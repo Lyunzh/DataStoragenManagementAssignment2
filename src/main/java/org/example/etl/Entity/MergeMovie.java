@@ -59,4 +59,10 @@ public class MergeMovie {
         this.timeSource = timeSource;
     }
 
+    @Override
+    public String toString() {
+        String result = "ReleaseDate:"+getReleaseTime().toString()+",_____Name:"+movieName+",_____Style:"+style;
+        return result;
+    }
+
 }

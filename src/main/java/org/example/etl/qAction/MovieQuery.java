@@ -14,7 +14,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class MovieQuery {
-    public List<OriginalMovie> queryByname(String name){
+
+    public static List<OriginalMovie> queryByName(String name){
 
         Session session = SessionFactoryUtil.openSession();
         try{
@@ -26,11 +27,12 @@ public class MovieQuery {
             Subquery<String> subQ = original_Movie_Q.subquery(String.class);
             Root<MovieDatasource> subRoot = subQ.from(MovieDatasource.class);
             //通过名字查询
-            subQ.select(subRoot.get("ASIN")).where(cb.equal(subRoot.get("name"), name));
-            Predicate predicate = cb.in(root.get("ASIN")).value(subQ);
+            subQ.select(subRoot.get("id").get("asin")).where(cb.equal(subRoot.get("id").get("movieName"), name));
+            Predicate predicate = cb.in(root.get("asin")).value(subQ);
             //返回主查询
             original_Movie_Q.where(predicate);
             List<OriginalMovie> result = session.createQuery(original_Movie_Q).getResultList();
+            System.out.println(result.toString());
             return result;
         }
         finally{
@@ -39,7 +41,7 @@ public class MovieQuery {
     }
 
 
-    public List<MergeMovie> queryByActor(String actor){
+    public static List<MergeMovie> queryByActor(String actor){
 
         Session session = SessionFactoryUtil.openSession();
         try{
@@ -51,8 +53,8 @@ public class MovieQuery {
             Subquery<String> subQ = mergeMovie_Q.subquery(String.class);
             Root<MergeAct> subRoot = subQ.from(MergeAct.class);
             //通过演员查询
-            subQ.select(subRoot.get("MOVIE_NAME")).where(cb.equal(subRoot.get("ACTOR"), actor));
-            Predicate predicate = cb.in(root.get("MOVIE_NAME")).value(subQ);
+            subQ.select(subRoot.get("id").get("movieName")).where(cb.equal(subRoot.get("id").get("actorName"), actor));
+            Predicate predicate = cb.in(root.get("movieName")).value(subQ);
             //返回主查询
             mergeMovie_Q.where(predicate);
             List<MergeMovie> result = session.createQuery(mergeMovie_Q).getResultList();
@@ -63,7 +65,7 @@ public class MovieQuery {
         }
     }
 
-    public List<MergeMovie> queryByDirector(String director){
+    public static List<MergeMovie> queryByDirector(String director){
         Session session = SessionFactoryUtil.openSession();
         try{
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -74,8 +76,8 @@ public class MovieQuery {
             Subquery<String> subQ = mergeMovie_Q.subquery(String.class);
             Root<MergeDirect> subRoot = subQ.from(MergeDirect.class);
             //通过导演查询
-            subQ.select(subRoot.get("MOVIE_NAME")).where(cb.equal(subRoot.get("DIRECTOR"), director));
-            Predicate predicate = cb.in(root.get("MOVIE_NAME")).value(subQ);
+            subQ.select(subRoot.get("id").get("movieName")).where(cb.equal(subRoot.get("id").get("directorName"), director));
+            Predicate predicate = cb.in(root.get("movieName")).value(subQ);
             //返回主查询
             mergeMovie_Q.where(predicate);
             List<MergeMovie> result = session.createQuery(mergeMovie_Q).getResultList();
@@ -86,7 +88,7 @@ public class MovieQuery {
         }
     }
 
-    public List<MergeMovie> queryBymonth(String Year, String Month){
+    public static List<MergeMovie> queryBymonth(String Year, String Month){
         Session session = SessionFactoryUtil.openSession();
         try {
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -106,7 +108,7 @@ public class MovieQuery {
             SessionFactoryUtil.closeSession();
         }
     }
-    public List<MergeMovie> queryByTime(String Year){
+    public static List<MergeMovie> queryByTime(String Year){
         Session session = SessionFactoryUtil.openSession();
         try {
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -125,6 +127,39 @@ public class MovieQuery {
             SessionFactoryUtil.closeSession();
         }
     }
+
+
+    public static List<MovieAvgScore> queryByScoregt(String Score) {
+        Session session = SessionFactoryUtil.openSession();
+        try {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<MovieAvgScore> query = cb.createQuery(MovieAvgScore.class);
+            Root<MovieAvgScore> root = query.from(MovieAvgScore.class);
+            Predicate predicate = cb.greaterThanOrEqualTo(root.get("AVG_SCORE"), Score);
+            query.where(predicate);
+            List<MovieAvgScore> result = session.createQuery(query).getResultList();
+            return result;
+        } finally {
+            SessionFactoryUtil.closeSession();
+        }
+    }
+
+    public static List<MovieAvgScore> queryByScorelt(String Score) {
+        Session session = SessionFactoryUtil.openSession();
+        try {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<MovieAvgScore> query = cb.createQuery(MovieAvgScore.class);
+            Root<MovieAvgScore> root = query.from(MovieAvgScore.class);
+            Predicate predicate = cb.lessThanOrEqualTo(root.get("AVG_SCORE"), Score);
+            query.where(predicate);
+            List<MovieAvgScore> result = session.createQuery(query).getResultList();
+            return result;
+        } finally {
+            SessionFactoryUtil.closeSession();
+        }
+    }
+
+
 
 
 

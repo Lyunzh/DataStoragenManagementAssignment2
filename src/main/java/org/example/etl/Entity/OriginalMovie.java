@@ -7,6 +7,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.StringJoiner;
+
 @Entity
 @Table(name = "ORIGINAL_MOVIE")
 public class OriginalMovie {
@@ -58,6 +60,12 @@ public class OriginalMovie {
 
     public void setIfMiss(String ifMiss) {
         this.ifMiss = ifMiss;
+    }
+
+    @Override
+    public String toString() {
+        String result = "ASIN:"+asin+",_____Name:"+movieName+",_____Style:"+style;
+        return result;
     }
 
 }
